@@ -1,3 +1,7 @@
+variable "example" {}            # This is CTRL Password
+variable "pet_name_length" {}    # This can be used for ??
+
+
 variable "gw_name" {}
 
 variable "sec_domain_name" {}
