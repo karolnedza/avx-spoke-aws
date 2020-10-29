@@ -2,17 +2,16 @@ variable "example" {}            # This is CTRL Password
 variable "pet_name_length" {}    # This can be used for ??
 
 
-variable "gw_name" {}
+variable "gw_name" {}           # must be variable 
+variable "sec_domain_name" {}   # must be variable 
+variable "azure_cidr" {}        # must be variable 
+variable "azure_region" {}      # must be variable 
 
-variable "sec_domain_name" {}
 
-variable "azure_account_name" {}
+variable "azure_account_name" {}  # probably a variable 
+variable "avtx_transit_gw" {}     # probably a variable 
+variable "azure_region" {}        # probably a variable 
 
-variable "avtx_transit_gw" {}
-
-variable "azure_region" {}
-
-variable "azure_cidr" {}
 
 variable "avtx_gw_size" { default = "Standard_B1ms" }
 
