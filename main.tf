@@ -36,7 +36,7 @@ resource "aviatrix_spoke_gateway" "avx-spoke-gw" {
   gw_name                = var.spoke_gw_name
   insane_mode            = var.hpe
   gw_size                = (var.cloud_type == "aws") ? "t2.medium" : "Standard_B1ms"
-  subnet       = (var.cloud_type == "aws") ? aviatrix_vpc.spoke_net[count.index].subnets[local.subnet_count].cidr : aviatrix_vpc.spoke_net[count.index].subnets[0].cidr
+  subnet       = (var.cloud_type == "aws") ? aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].cidr : aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].cidr
   enable_active_mesh     = true
   manage_transit_gateway_attachment = false
 }
