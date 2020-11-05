@@ -9,3 +9,6 @@ variable "aviatrix_transit_gateway" {}
 
 variable "avtx_gw_ha" {default = false}
 variable "hpe" { default = false}
+variable "ctrl_password" {}
+variable "vcs_repository" {}
+
