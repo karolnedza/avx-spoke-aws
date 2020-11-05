@@ -1,20 +1,11 @@
-variable "example" {}            # This is CTRL Password
-variable "pet_name_length" {}    # This can be used for ??
+variable "cloud_type" {}           
+variable "cloud_region" {}
+variable "spoke_gw_name" {}           
+variable "vnet_vpc_address_space" {}   
+variable "transit_segment" {}        
+variable "cloud_account_name" {} 
+variable "aviatrix_transit_gateway" {}      
 
-
-variable "gw_name" {}           # must be variable 
-variable "sec_domain_name" {}   # must be variable 
-variable "azure_cidr" {}        # must be variable 
-variable "azure_region" {}      # must be variable 
-
-
-variable "azure_account_name" {}  # probably a variable 
-variable "avtx_transit_gw" {}     # probably a variable 
-variable "azure_region" {}        # probably a variable 
-
-
-variable "avtx_gw_size" { default = "Standard_B1ms" }
 
 variable "avtx_gw_ha" {default = false}
-
 variable "hpe" { default = false}
