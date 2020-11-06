@@ -58,3 +58,15 @@ resource "aviatrix_segmentation_security_domain_association" "segmentation_secur
   attachment_name      = aviatrix_spoke_transit_attachment.spoke_transit_attachment.spoke_gw_name
 
 }
+
+#### Resource EC2 
+
+# resource "aws_instance" {
+#   count.index = 
+  
+#   }
+
+
+# resource "azure_???" {
+#   }
+
