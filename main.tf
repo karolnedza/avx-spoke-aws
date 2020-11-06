@@ -19,7 +19,7 @@ resource "aviatrix_vpc" "aviatrix_vpc_vnet" {
   cloud_type           = (var.cloud_type == "aws") ? 1 : 8
   account_name         = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
   region               = var.cloud_region
-  name                 = "avtx-spoke-${var.spoke_gw_name}-net"
+  name                 = "${var.spoke_gw_name}-vpc"
   cidr                 = var.vnet_vpc_address_space
   aviatrix_transit_vpc = false
   aviatrix_firenet_vpc = false
