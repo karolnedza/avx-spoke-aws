@@ -19,3 +19,10 @@ variable "public_key" {}
 variable "private_key" {}
 variable "key_name" {default = "avtx-key"}
 
+
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+variable "azure_subscription_id" {}
+variable "azure_directory_id" {}
+variable "azure_application_id" {}
+variable "azure_application_key" {}
