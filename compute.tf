@@ -10,7 +10,7 @@ resource "aws_instance" "test_instance" {
   associate_public_ip_address = true
     user_data = <<EOF
     sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-    sudo echo 'ubuntu:Password123!' | /usr/sbin/chpasswd
+    sudo echo 'ubuntu:Password123!' | sudo /usr/sbin/chpasswd
     sudo /etc/init.d/ssh restart
 EOF
   
@@ -19,7 +19,6 @@ EOF
     user     = "ubuntu"
     host     = self.public_ip
     private_key = var.private_key
-#    private_key = file("avtx_priv_key.pem")
   }
 
   tags = {
