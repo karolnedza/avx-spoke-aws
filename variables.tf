@@ -15,8 +15,8 @@ variable "ctrl_password" {}
 variable "vcs_repository" {default = "placeholder"}
 
 
-variable "public_key" {}
-variable "private_key" {}
+# variable "public_key" {}
+# variable "private_key" {}
 variable "key_name" {default = "avtx-key"}
 
 
