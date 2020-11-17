@@ -2,12 +2,18 @@
 
 resource "aws_instance" "test_instance" {
   count = (var.cloud_type == "aws") ? 1 : 0
-  key_name      = aws_key_pair.comp_generated_key.key_name
-  ami           = data.aws_ami.ubuntu_server.id
+  key_name   = aws_key_pair.key.key_name
+  ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   subnet_id   = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].subnet_id
   vpc_security_group_ids  = ["${aws_security_group.allow_ssh_icmp_spoke.id}"]
   associate_public_ip_address = true
+    user_data = <<EOF
+    sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+    sudo echo 'ubuntu:Password123!' | /usr/sbin/chpasswd
+    sudo /etc/init.d/ssh restart
+EOF
+  
   connection {
     type     = "ssh"
     user     = "ubuntu"
@@ -23,23 +29,17 @@ resource "aws_instance" "test_instance" {
 }
 
 
-data "aws_ami" "ubuntu_server" {
+data "aws_ami" "ubuntu" {
   most_recent = true
-  owners = ["099720109477"]
-
   filter {
     name   = "name"
-    values = ["*ubuntu-xenial-16.04-amd64-server-20181114*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
   }
   filter {
-    name = "root-device-type"
-    values = ["ebs"]
-  }
-
-  filter {
-    name = "virtualization-type"
+    name   = "virtualization-type"
     values = ["hvm"]
   }
+  owners = ["099720109477"] # Canonical
 }
 
 resource "aws_security_group" "allow_ssh_icmp_spoke" {
@@ -70,7 +70,7 @@ resource "aws_security_group" "allow_ssh_icmp_spoke" {
 }
 #
 
-resource "aws_key_pair" "comp_generated_key" {
-  key_name   = "${var.key_name}_${var.aws_region}_vpc"
-  public_key = var.public_key
+resource "aws_key_pair" "key" {
+  key_name   = "instance-key"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnNDeCuEOgJjtFFzWa9fXyKj8mSdCnCVR+iOm40JYSO4/kKEOflq0VvtIcnezv1wa4Ghj3RqEcFd9857qAQfqsn5KgjwuoYG37eTthz9waKSbem6l8hilR4CncagBqMqje8EDuWFdyNPWmgM04nHJ+HRn0UoXzYikSbbQJ082XORREEpZA4Rt7ZHtIncqN5EMBPQ4lflDOR7l0pCTcGObHNPOuWje35ZQqcjryskUkgvEzx+kFxnJ5fG2cwvDkoq8JrCwXhZNmoYNvR6cAtzMo7S/v7THxCxYMgsSUWRzY1+Pi93EB/CIZp5le0gewblrzXpc8DmHd5NPi3ObPwPTh dennis@NUC"
 }
