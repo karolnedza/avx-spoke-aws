@@ -9,9 +9,12 @@ resource "aws_instance" "test_instance" {
   vpc_security_group_ids  = ["${aws_security_group.allow_ssh_icmp_spoke.id}"]
   associate_public_ip_address = true
     user_data = <<EOF
-    sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-    sudo echo 'ubuntu:Password123!' | sudo /usr/sbin/chpasswd
-    sudo /etc/init.d/ssh restart
+#!/bin/bash
+# allow linuix access by password
+sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+sudo echo 'ubuntu:Password123!' | sudo /usr/sbin/chpasswd
+sudo /etc/init.d/ssh restart
+
 EOF
   
   connection {
