@@ -12,7 +12,7 @@ variable "transit_segment" {}
 
 variable "aviatrix_transit_gateway" {}      
 variable "ctrl_password" {}
-variable "vcs_repository" {}
+variable "vcs_repository" {default = "placeholder"}
 
 
 variable "public_key" {}
