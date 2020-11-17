@@ -14,3 +14,8 @@ variable "aviatrix_transit_gateway" {}
 variable "ctrl_password" {}
 variable "vcs_repository" {}
 
+
+variable "public_key" {}
+variable "private_key" {}
+variable "key_name" {default = "avtx-key"}
+
