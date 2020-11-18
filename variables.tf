@@ -5,8 +5,17 @@ variable "avtx_gw_ha" {default = false}
 variable "hpe" {default = false}
 
 variable "cloud_type" {}           
-variable "aws_cloud_region" {default = "us-east-1"}
-variable "azure_cloud_region" {default = "East US"}
+variable "cloud_region" {  type = list(object({
+    aws = string
+    azure = string
+  }))
+  default = [
+    {
+      internal = "us-east-1"
+      azure = "East US"
+    }
+  ]}
+
 variable "spoke_gw_name" {}           
 variable "vnet_vpc_address_space" {}   
 variable "transit_segment" {}        
