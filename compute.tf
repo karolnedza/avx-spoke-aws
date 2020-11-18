@@ -33,6 +33,7 @@ EOF
 
 
 data "aws_ami" "ubuntu" {
+  count = (var.cloud_type == "aws") ? 1 : 0
   most_recent = true
   filter {
     name   = "name"
