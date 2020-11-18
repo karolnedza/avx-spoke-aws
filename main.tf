@@ -21,7 +21,7 @@ resource "aviatrix_vpc" "aviatrix_vpc_vnet" {
 
 resource "aviatrix_spoke_gateway" "avx-spoke-gw" {
   cloud_type             = (var.cloud_type == "aws") ? 1 : 8
-  vpc_reg                = var.cloud_region
+  vpc_reg                = (var.cloud_type == "aws") ? var.aws_cloud_region : var.azure_cloud_region
   vpc_id                 = aviatrix_vpc.aviatrix_vpc_vnet.vpc_id
   account_name           = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
   gw_name                = var.spoke_gw_name
