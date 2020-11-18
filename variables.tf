@@ -7,7 +7,10 @@ variable "hpe" {default = false}
 variable "cloud_type" {}           
 
 variable "cloud_region" {
-    type = "list"
+    type = list(object({
+    aws = string
+    azure = string
+}))
     
     default = {
         aws = "us-east-1"
