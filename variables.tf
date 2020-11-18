@@ -11,7 +11,7 @@ variable "cloud_region" {  type = list(object({
   }))
   default = [
     {
-      internal = "us-east-1"
+      aws = "us-east-1"
       azure = "East US"
     }
   ]}
