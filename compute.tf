@@ -91,7 +91,7 @@ resource "aws_key_pair" "key" {
 resource "azurerm_resource_group" "aviatrix-rg" {
   count = (var.cloud_type == "azure") ? 1 : 0
   name     = "rg-${var.vm_name}"
-  location = var.cloud_region
+  location = var.azure_cloud_region
 }
 
 resource "azurerm_public_ip" "avtx-public-ip" {
