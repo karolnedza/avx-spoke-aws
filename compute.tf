@@ -4,7 +4,7 @@
 resource "aws_instance" "test_instance" {
   count = (var.cloud_type == "aws") ? 1 : 0
   key_name   = aws_key_pair.key[0].key_name
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.ubuntu[0].id
   instance_type = "t2.micro"
   subnet_id   = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].subnet_id
   vpc_security_group_ids  = ["${aws_security_group.allow_ssh_icmp_spoke[0].id}"]
