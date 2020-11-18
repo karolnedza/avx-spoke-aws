@@ -6,8 +6,7 @@ variable "hpe" {default = false}
 
 variable "cloud_type" {}           
 
-variable "azure_cloud_region" {}
-variable "aws_cloud_region" {}
+variable "cloud_region" {default = "us-east-1"}
 
 
 variable "spoke_gw_name" {}           
