@@ -115,7 +115,7 @@ output "vpc_id_2" {
 }
 
 output "vpc_id_3" {
-  value = ${aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].subnet_id}"
+  value = ${aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].subnet_id}
 }
 
 # resource "azurerm_network_interface" "iface" {
