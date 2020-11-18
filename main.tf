@@ -9,7 +9,7 @@ locals {
 resource "aviatrix_vpc" "aviatrix_vpc_vnet" {
   cloud_type           = (var.cloud_type == "aws") ? 1 : 8
   account_name         = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
-  region               = var.cloud_region
+  region               = (var.cloud_type == "aws") ? var.aws_cloud_region : var.azure_cloud_region
   name                 = "${var.spoke_gw_name}-vpc"
   cidr                 = var.vnet_vpc_address_space
   aviatrix_transit_vpc = false
