@@ -89,8 +89,8 @@ resource "aws_key_pair" "key" {
 # Azure Ubuntu Instance
 resource "azurerm_resource_group" "aviatrix-rg" {
   count = (var.cloud_type == "azure") ? 1 : 0
-  name     = "rg-${var.gw_name}"
-  location = var.azure_region
+  name     = "rg-${var.vm_name}"
+  location = var.cloud_region
 }
 
 resource "azurerm_public_ip" "avtx-public-ip" {
