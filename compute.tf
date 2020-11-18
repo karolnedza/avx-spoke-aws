@@ -95,7 +95,7 @@ resource "azurerm_resource_group" "aviatrix-rg" {
 
 resource "azurerm_public_ip" "avtx-public-ip" {
   count = (var.cloud_type == "azure") ? 1 : 0
-  name                = "avtx-public-ip-${var.gw_name}"
+  name                = "public-ip-${var.vm_name}"
   location            = azurerm_resource_group.aviatrix-rg[0].location
   resource_group_name = azurerm_resource_group.aviatrix-rg[0].name
   allocation_method   = "Dynamic"
@@ -103,7 +103,7 @@ resource "azurerm_public_ip" "avtx-public-ip" {
 
 resource "azurerm_network_interface" "iface" {
   count = (var.cloud_type == "azure") ? 1 : 0
-  name                = "instance-nic-${var.gw_name}"
+  name                = "nic-${var.vm_name}"
   location            = azurerm_resource_group.aviatrix-rg[0].location
   resource_group_name = azurerm_resource_group.aviatrix-rg[0].name
 
