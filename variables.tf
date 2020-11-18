@@ -5,8 +5,10 @@ variable "avtx_gw_ha" {default = false}
 variable "hpe" {default = false}
 
 variable "cloud_type" {}           
+
 variable "cloud_region" {
-    type = map"
+    type = "map"
+    
     default = {
         aws = "us-east-1"
         azure = "East US"
