@@ -6,7 +6,7 @@ resource "aws_instance" "test_instance" {
   key_name   = aws_key_pair.key[0].key_name
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id   = aviatrix_vpc.aviatrix_vpc_vnet[0].subnets[local.subnet_count].subnet_id
+  subnet_id   = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].subnet_id
   vpc_security_group_ids  = ["${aws_security_group.allow_ssh_icmp_spoke[0].id}"]
   associate_public_ip_address = true
     user_data = <<EOF
@@ -49,7 +49,7 @@ resource "aws_security_group" "allow_ssh_icmp_spoke" {
   count = (var.cloud_type == "aws") ? 1 : 0
   name        = "allow_ssh_icmp"
   description = "Allow SSH & ICMP inbound traffic"
-  vpc_id      = aviatrix_vpc.aviatrix_vpc_vnet[0].vpc_id
+  vpc_id      = aviatrix_vpc.aviatrix_vpc_vnet.vpc_id
 
   ingress {
     from_port   = 22
