@@ -83,7 +83,7 @@ resource "aws_key_pair" "key" {
 # output "ec2_public_ip" {
 # value = aws_instance.test_instance[0].public_ip
 
-}
+#}
 
 ####################################################################
 # Azure Ubuntu Instance
@@ -137,7 +137,7 @@ resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
+    sku       = "18.04-LTS"
     version   = "latest"
   }
 }
