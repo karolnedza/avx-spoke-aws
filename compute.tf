@@ -111,7 +111,7 @@ resource "azurerm_network_interface" "iface" {
     name                          = "avtx_internal-${var.vm_name}"
     subnet_id     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${split(":",aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[1]}/providers/Microsoft.Network/virtualNetworks/${split(":",aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[0]}/subnets/${aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].subnet_id}"
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id = azurerm_public_ip.avtx-public-ip.id
+    public_ip_address_id = azurerm_public_ip.avtx-public-ip[0].id
 
   }
 }
@@ -124,7 +124,7 @@ resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
   size                = "Standard_B1s"
   admin_username      = "ubuntu"
   network_interface_ids = [
-    azurerm_network_interface.iface.id,
+    azurerm_network_interface.iface[0].id,
   ]
 
   admin_password = "Aviatrix123#"
