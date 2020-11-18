@@ -1,12 +1,13 @@
-#### Resource EC2 
+####################################################################
+# AWS Ubuntu Instance
 
 resource "aws_instance" "test_instance" {
   count = (var.cloud_type == "aws") ? 1 : 0
-  key_name   = aws_key_pair.key.key_name
+  key_name   = aws_key_pair.key[0].key_name
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id   = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].subnet_id
-  vpc_security_group_ids  = ["${aws_security_group.allow_ssh_icmp_spoke.id}"]
+  subnet_id   = aviatrix_vpc.aviatrix_vpc_vnet[0].subnets[local.subnet_count].subnet_id
+  vpc_security_group_ids  = ["${aws_security_group.allow_ssh_icmp_spoke[0].id}"]
   associate_public_ip_address = true
     user_data = <<EOF
 #!/bin/bash
@@ -25,8 +26,8 @@ EOF
   }
 
   tags = {
-    Name = "aws-test-instance"
-   # Name = var.vm_name
+    #Name = "aws-test-instance"
+     Name = var.vm_name
   }
 }
 
@@ -45,9 +46,10 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_security_group" "allow_ssh_icmp_spoke" {
+  count = (var.cloud_type == "aws") ? 1 : 0
   name        = "allow_ssh_icmp"
   description = "Allow SSH & ICMP inbound traffic"
-  vpc_id      = aviatrix_vpc.aviatrix_vpc_vnet.vpc_id
+  vpc_id      = aviatrix_vpc.aviatrix_vpc_vnet[0].vpc_id
 
   ingress {
     from_port   = 22
@@ -73,11 +75,69 @@ resource "aws_security_group" "allow_ssh_icmp_spoke" {
 #
 
 resource "aws_key_pair" "key" {
-  key_name   = "instance-key"
+  count = (var.cloud_type == "aws") ? 1 : 0
+  key_name   = "${var.vm_name}-key"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnNDeCuEOgJjtFFzWa9fXyKj8mSdCnCVR+iOm40JYSO4/kKEOflq0VvtIcnezv1wa4Ghj3RqEcFd9857qAQfqsn5KgjwuoYG37eTthz9waKSbem6l8hilR4CncagBqMqje8EDuWFdyNPWmgM04nHJ+HRn0UoXzYikSbbQJ082XORREEpZA4Rt7ZHtIncqN5EMBPQ4lflDOR7l0pCTcGObHNPOuWje35ZQqcjryskUkgvEzx+kFxnJ5fG2cwvDkoq8JrCwXhZNmoYNvR6cAtzMo7S/v7THxCxYMgsSUWRzY1+Pi93EB/CIZp5le0gewblrzXpc8DmHd5NPi3ObPwPTh dennis@NUC"
 }
 
-output "ec2_public_ip" {
-value = aws_instance.test_instance[0].public_ip
+# output "ec2_public_ip" {
+# value = aws_instance.test_instance[0].public_ip
 
+}
+
+####################################################################
+# Azure Ubuntu Instance
+resource "azurerm_resource_group" "aviatrix-rg" {
+  count = (var.cloud_type == "azure") ? 1 : 0
+  name     = "rg-${var.gw_name}"
+  location = var.azure_region
+}
+
+resource "azurerm_public_ip" "avtx-public-ip" {
+  count = (var.cloud_type == "azure") ? 1 : 0
+  name                = "avtx-public-ip-${var.gw_name}"
+  location            = azurerm_resource_group.aviatrix-rg.location
+  resource_group_name = azurerm_resource_group.aviatrix-rg.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_interface" "iface" {
+  count = (var.cloud_type == "azure") ? 1 : 0
+  name                = "instance-nic-${var.gw_name}"
+  location            = azurerm_resource_group.aviatrix-rg.location
+  resource_group_name = azurerm_resource_group.aviatrix-rg.name
+
+  ip_configuration {
+    name                          = "avtx_internal-${var.gw_name}"
+    subnet_id     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${split(":",aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[1]}/providers/Microsoft.Network/virtualNetworks/${split(":",aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[0]}/subnets/${aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].subnet_id}"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id = azurerm_public_ip.avtx-public-ip.id
+
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
+  count = (var.cloud_type == "azure") ? 1 : 0
+  name                = var.vm_name
+  resource_group_name = azurerm_resource_group.aviatrix-rg[0].name
+  location            = azurerm_resource_group.aviatrix-rg[0].location
+  size                = "Standard_B1s"
+  admin_username      = "ubuntu"
+  network_interface_ids = [
+    azurerm_network_interface.iface.id,
+  ]
+
+  admin_password = "Aviatrix123#"
+  disable_password_authentication = "false"
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
 }
