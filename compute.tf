@@ -107,17 +107,17 @@ output "vpc_id" {
   value = aviatrix_vpc.aviatrix_vpc_vnet.vpc_id
 }
 
-output "vpc_id_1" {
+# output "vpc_id_1" {
   
-  value = split(":", aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[0])
+#   value = split(":", aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[0])
 
-}
+# }
 
-output "vpc_id_2" {
+# output "vpc_id_2" {
   
-  value = split(":", aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[1])
+#   value = split(":", aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[1])
 
-}
+# }
 
 output "vpc_id_3" {
   
