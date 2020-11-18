@@ -6,17 +6,13 @@ variable "hpe" {default = false}
 
 variable "cloud_type" {}           
 variable "cloud_region" {
-    type = list(object({
-        aws = string
-        azure = string
-  }))
-  default = [
-    {
-      aws = "us-east-1"
-      azure = "East US"
-    }
-  ]}
-
+    type = map"
+    default = {
+        aws = "us-east-1"
+        azure = "East US"
+  }
+}
+    
 variable "spoke_gw_name" {}           
 variable "vnet_vpc_address_space" {}   
 variable "transit_segment" {}        
