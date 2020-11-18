@@ -7,7 +7,7 @@ variable "hpe" {default = false}
 variable "cloud_type" {}           
 
 variable "cloud_region" {
-    type = "map"
+    type = "list"
     
     default = {
         aws = "us-east-1"
