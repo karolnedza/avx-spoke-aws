@@ -26,3 +26,6 @@ variable "azure_subscription_id" {}
 variable "azure_directory_id" {}
 variable "azure_application_id" {}
 variable "azure_application_key" {}
+
+variable "vm_name" {default = "aws-default-instance}
+
