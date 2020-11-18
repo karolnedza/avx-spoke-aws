@@ -7,15 +7,16 @@ variable "hpe" {default = false}
 variable "cloud_type" {}           
 
 variable "cloud_region" {
-    type = list(object({
+  type = list(object({
     aws = string
     azure = string
-}))
-    
-    default = {
-        aws = "us-east-1"
-        azure = "East US"
-  }
+  }))
+  default = [
+    {
+      aws = "us-east-1"
+      azure = "East US"
+    }
+  ]
 }
     
 variable "spoke_gw_name" {}           
