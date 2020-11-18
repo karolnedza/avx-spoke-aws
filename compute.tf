@@ -110,7 +110,7 @@ resource "azurerm_network_interface" "iface" {
 
   ip_configuration {
     name                          = "avtx_internal-${var.vm_name}"
-    subnet_id     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${split(":",aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[1]}/providers/Microsoft.Network/virtualNetworks/${split(":",aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[0]}/subnets/${aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].subnet_id}"
+    subnet_id     = "/subscriptions/${var.azure_subscription_id}/resourceGroups/${split(":", aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[1]}/providers/Microsoft.Network/virtualNetworks/${split(":", aviatrix_vpc.aviatrix_vpc_vnet.vpc_id)[0]}/subnets/${aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].subnet_id}"
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id = azurerm_public_ip.avtx-public-ip[0].id
 
