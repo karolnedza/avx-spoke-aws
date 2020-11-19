@@ -10,7 +10,7 @@ resource "aviatrix_vpc" "aviatrix_vpc_vnet" {
   cloud_type           = (var.cloud_type == "aws") ? 1 : 8
   account_name         = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
   region               = (var.cloud_type == "aws") ? var.aws_cloud_region : var.azure_cloud_region
-  name                 = "${var.spoke_gw_name}-vpc"
+  name                 = "${var.vm_name}-vpc"
   cidr                 = var.vnet_vpc_address_space
   aviatrix_transit_vpc = false
   aviatrix_firenet_vpc = false
@@ -24,7 +24,7 @@ resource "aviatrix_spoke_gateway" "avx-spoke-gw" {
   vpc_reg                = (var.cloud_type == "aws") ? var.aws_cloud_region : var.azure_cloud_region
   vpc_id                 = aviatrix_vpc.aviatrix_vpc_vnet.vpc_id
   account_name           = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
-  gw_name                = var.spoke_gw_name
+  gw_name                = "avx-${var.vm_name}-gw"
   insane_mode            = var.hpe
   gw_size                = (var.cloud_type == "aws") ? "t2.medium" : "Standard_B1ms"
   subnet       = (var.cloud_type == "aws") ? aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].cidr : aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].cidr
