@@ -10,7 +10,7 @@ variable "aws_cloud_region" {default = "us-east-1"}
 
 variable "azure_cloud_region" {default = "East US"}
 
-variable "spoke_gw_name" {}           
+#variable "spoke_gw_name" {}           
 variable "vnet_vpc_address_space" {}   
 variable "transit_segment" {}        
 
@@ -31,5 +31,5 @@ variable "azure_directory_id" {}
 variable "azure_application_id" {}
 variable "azure_application_key" {}
 
-variable "vm_name" {default = "aws-default-instance"}
+variable "vm_name" {default = "default-name"}
 
