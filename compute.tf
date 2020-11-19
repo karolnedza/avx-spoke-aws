@@ -90,7 +90,6 @@ resource "aws_key_pair" "key" {
 
 resource "aws_route53_record" "aws_vm_fqdn" {
   count = (var.cloud_type == "aws") ? 1 : 0
-  provider = aws.dns
   zone_id    = data.aws_route53_zone.pub.zone_id
   name       = "{var.vm_name}.mcna.cc"
   type       = "A"
@@ -164,7 +163,6 @@ resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
 
 resource "aws_route53_record" "azure_vm_fqdn" {
   count = (var.cloud_type == "azure") ? 1 : 0
-  provider = aws.dns
   zone_id    = data.aws_route53_zone.pub.zone_id
   name       = "{var.vm_name}.mcna.cc"
   type       = "A"
