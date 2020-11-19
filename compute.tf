@@ -46,6 +46,12 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
+data "aws_route53_zone" "pub" {
+  name         = "mcna.cc"
+  private_zone = false
+}
+
+
 resource "aws_security_group" "allow_ssh_icmp_spoke" {
   count = (var.cloud_type == "aws") ? 1 : 0
   name        = "allow_ssh_icmp"
@@ -81,10 +87,20 @@ resource "aws_key_pair" "key" {
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnNDeCuEOgJjtFFzWa9fXyKj8mSdCnCVR+iOm40JYSO4/kKEOflq0VvtIcnezv1wa4Ghj3RqEcFd9857qAQfqsn5KgjwuoYG37eTthz9waKSbem6l8hilR4CncagBqMqje8EDuWFdyNPWmgM04nHJ+HRn0UoXzYikSbbQJ082XORREEpZA4Rt7ZHtIncqN5EMBPQ4lflDOR7l0pCTcGObHNPOuWje35ZQqcjryskUkgvEzx+kFxnJ5fG2cwvDkoq8JrCwXhZNmoYNvR6cAtzMo7S/v7THxCxYMgsSUWRzY1+Pi93EB/CIZp5le0gewblrzXpc8DmHd5NPi3ObPwPTh dennis@NUC"
 }
 
-# output "ec2_public_ip" {
-# value = aws_instance.test_instance[0].public_ip
 
-#}
+resource "aws_route53_record" "aws_vm_fqdn" {
+  count = (var.cloud_type == "aws") ? 1 : 0
+  provider = aws.dns
+  zone_id    = data.aws_route53_zone.pub.zone_id
+  name       = "{var.vm_name}.mcna.cc"
+  type       = "A"
+  ttl        = "300"
+  records    = [aws_instance.test_instance[0].public_ip]
+}
+
+output "ec2_public_ip" {
+value = aws_instance.test_instance[0].public_ip
+}
 
 ####################################################################
 # Azure Ubuntu Instance
@@ -118,6 +134,7 @@ resource "azurerm_network_interface" "iface" {
   }
 }
 
+
 resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
   count = (var.cloud_type == "azure") ? 1 : 0
   name                = var.vm_name
@@ -144,3 +161,13 @@ resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
   }
 }
 
+
+resource "aws_route53_record" "azure_vm_fqdn" {
+  count = (var.cloud_type == "azure") ? 1 : 0
+  provider = aws.dns
+  zone_id    = data.aws_route53_zone.pub.zone_id
+  name       = "{var.vm_name}.mcna.cc"
+  type       = "A"
+  ttl        = "300"
+  records    = [azurerm_public_ip.avtx-public-ip[0].ip_address]
+}
