@@ -97,9 +97,9 @@ resource "aws_route53_record" "aws_vm_fqdn" {
   records    = [aws_instance.test_instance[0].public_ip]
 }
 
-output "ec2_public_ip" {
-value = aws_instance.test_instance[0].public_ip
-}
+# output "ec2_public_ip" {
+# value = aws_instance.test_instance[0].public_ip
+# }
 
 ####################################################################
 # Azure Ubuntu Instance
