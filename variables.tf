@@ -24,6 +24,16 @@ variable "cloud_region" {
     tg-south-central-us-azure = "South Central US"
   }
 }
+
+variable "cloud_type" {
+  type        = map(string)
+  default     = {
+    tg-eu-west-2-aws     = "aws",
+    tg-eu-west-2-azure = "azure",
+    tg-south-central-us-azure = "azure"
+  }
+}
+
 variable "ctrl_password" {}
 variable "vcs_repository" {default = "placeholder"}
 
