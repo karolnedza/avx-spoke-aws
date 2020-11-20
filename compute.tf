@@ -161,11 +161,11 @@ resource "azurerm_linux_virtual_machine" "azure-spoke-vm" {
 }
 
 
-resource "aws_route53_record" "azure_vm_fqdn" {
-  count = (var.cloud_type == "azure") ? 1 : 0
-  zone_id    = data.aws_route53_zone.pub.zone_id
-  name       = "${var.vm_name}.mcna.cc"
-  type       = "A"
-  ttl        = "300"
-  records    = [azurerm_public_ip.avtx-public-ip[0].ip_address]
-}
+# resource "aws_route53_record" "azure_vm_fqdn" {
+#   count = (var.cloud_type == "azure") ? 1 : 0
+#   zone_id    = data.aws_route53_zone.pub.zone_id
+#   name       = "${var.vm_name}.mcna.cc"
+#   type       = "A"
+#   ttl        = "300"
+#   records    = [azurerm_public_ip.avtx-public-ip[0].ip_address]
+# }
