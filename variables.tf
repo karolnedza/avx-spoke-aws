@@ -6,9 +6,9 @@ variable "hpe" {default = false}
 
 variable "cloud_type" {}           
 
-variable "aws_cloud_region" {default = "us-east-1"}
+# variable "aws_cloud_region" {default = "us-east-1"}
 
-variable "azure_cloud_region" {default = "East US"}
+# variable "azure_cloud_region" {default = "East US"}
 
 #variable "spoke_gw_name" {}           
 variable "vnet_vpc_address_space" {}   
@@ -20,7 +20,8 @@ variable "cloud_region" {
   type        = map(string)
   default     = {
     tg-eu-west-2-aws     = "eu-west-2",
-    tg-eu-west-2-azure = "West Europe"
+    tg-eu-west-2-azure = "West Europe",
+    tg-south-central-us-azure = "South Central US"
   }
 }
 variable "ctrl_password" {}
