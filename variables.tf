@@ -14,7 +14,7 @@ variable "azure_cloud_region" {default = "East US"}
 variable "vnet_vpc_address_space" {}   
 variable "transit_segment" {}        
 
-variable "aviatrix_transit_gateway"
+variable "aviatrix_transit_gateway" {}
 
 variable "cloud_region" {
   type        = map(string)
