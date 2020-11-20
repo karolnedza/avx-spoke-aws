@@ -4,7 +4,7 @@
 variable "avtx_gw_ha" {default = false}
 variable "hpe" {default = false}
 
-# variable "cloud_type" {}           
+variable "cloud_type" {}           
 
 # variable "aws_cloud_region" {default = "us-east-1"}
 
@@ -25,14 +25,14 @@ variable "cloud_region" {
   }
 }
 
-variable "cloud_type" {
-  type        = map(string)
-  default     = {
-    tg-eu-west-2-aws     = "aws",
-    tg-eu-west-2-azure = "azure",
-    tg-south-central-us-azure = "azure"
-  }
-}
+# variable "cloud_type" {
+#   type        = map(string)
+#   default     = {
+#     tg-eu-west-2-aws     = "aws",
+#     tg-eu-west-2-azure = "azure",
+#     tg-south-central-us-azure = "azure"
+#   }
+# }
 
 variable "ctrl_password" {}
 variable "vcs_repository" {default = "placeholder"}
