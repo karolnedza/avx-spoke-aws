@@ -14,7 +14,15 @@ variable "azure_cloud_region" {default = "East US"}
 variable "vnet_vpc_address_space" {}   
 variable "transit_segment" {}        
 
-variable "aviatrix_transit_gateway" {}      
+
+
+variable "aviatrix_transit_gateway" {
+  type        = map(string)
+  default     = {
+    tg-eu-west-2-aws     = "eu-west-2",
+    tg-eu-west-2-azure = "West Europe"
+  }
+}
 variable "ctrl_password" {}
 variable "vcs_repository" {default = "placeholder"}
 
