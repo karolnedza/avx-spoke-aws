@@ -4,7 +4,7 @@
 variable "avtx_gw_ha" {default = false}
 variable "hpe" {default = false}
 
-variable "cloud_type" {}           
+# variable "cloud_type" {}           
 
 # variable "aws_cloud_region" {default = "us-east-1"}
 
