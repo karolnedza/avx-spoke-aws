@@ -77,6 +77,13 @@ resource "aws_security_group" "allow_ssh_icmp_spoke" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   
+    ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   
   ingress {
     from_port   = -1
