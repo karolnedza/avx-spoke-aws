@@ -124,7 +124,6 @@ resource "aws_route53_record" "aws_vm_fqdn_priv" {
 ###################### Windows
 
 resource "aws_instance" "aws-windows" {
-  provider                    = aws.west1
   ami                         = var.ami_windows["${var.aviatrix_transit_gateway}"]
   instance_type               = "t3.large"
   subnet_id                   = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].subnet_id
