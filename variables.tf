@@ -18,6 +18,15 @@ variable "cloud_region" {
   }
  }
 
+variable "ami_windows" {
+  type        = map(string)
+  default     = {
+    tg-eu-west-2     = "ami-043e7c628e7e44707",
+    tg-ap-southeast-1 = "ami-02ea9e3a06231daba"
+  }
+ }
+
+
 variable "ctrl_password" {}
 variable "vcs_repository" {default = "placeholder"}
 variable "key_name" {default = "avtx-key"}
