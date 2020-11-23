@@ -121,3 +121,25 @@ resource "aws_route53_record" "aws_vm_fqdn_priv" {
   records    = [aws_instance.test_instance.private_ip]
 }
 
+###################### Windows
+
+resource "aws_instance" "aws-windows" {
+  provider                    = aws.west1
+  ami                         = var.ami_windows["${var.aviatrix_transit_gateway}"]
+  instance_type               = "t3.large"
+  subnet_id                   = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].subnet_id
+  associate_public_ip_address = true
+  vpc_security_group_ids      = ["${aws_security_group.allow_ssh_icmp_spoke.id}"]
+  tags = {
+    Name = "${var.vm_name}-win"
+  }
+}
+
+
+resource "aws_route53_record" "aws_vm_fqdn_pub_win" {
+  zone_id    = data.aws_route53_zone.pub.zone_id
+  name       = "${var.vm_name}-win.pub.mcna.cc"
+  type       = "A"
+  ttl        = "300"
+  records    = [aws_instance.aws-windows.public_ip]
+}
