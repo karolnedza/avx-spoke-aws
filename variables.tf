@@ -4,7 +4,7 @@
 variable "avtx_gw_ha" {default = false}
 variable "hpe" {default = false}
 
-variable "cloud_type" {}           
+#variable "cloud_type" {}           
 
 # variable "aws_cloud_region" {default = "us-east-1"}
 
@@ -19,11 +19,11 @@ variable "aviatrix_transit_gateway" {}
 variable "cloud_region" {
   type        = map(string)
   default     = {
-    tg-eu-west-2-aws     = "eu-west-2",
-    tg-eu-west-2-azure = "West Europe",
-    tg-south-central-us-azure = "South Central US"
+    tg-eu-west-2     = "eu-west-2",
+    tg-ap-southeast-1 = "ap-southeast-1",
+    tg-south-central-us = "South Central US",
+    tg-west-europe = "West Europe"
   }
-}
 
 # variable "cloud_type" {
 #   type        = map(string)
