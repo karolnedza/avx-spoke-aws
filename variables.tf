@@ -2,15 +2,7 @@
 # Variables 
 
 variable "avtx_gw_ha" {default = false}
-variable "hpe" {default = false}
-
-#variable "cloud_type" {}           
-
-# variable "aws_cloud_region" {default = "us-east-1"}
-
-# variable "azure_cloud_region" {default = "East US"}
-
-#variable "spoke_gw_name" {}           
+variable "hpe" {default = false}          
 variable "vnet_vpc_address_space" {}   
 variable "transit_segment" {}        
 
@@ -24,22 +16,10 @@ variable "cloud_region" {
     tg-south-central-us = "South Central US",
     tg-west-europe = "West Europe"
   }
-
-# variable "cloud_type" {
-#   type        = map(string)
-#   default     = {
-#     tg-eu-west-2-aws     = "aws",
-#     tg-eu-west-2-azure = "azure",
-#     tg-south-central-us-azure = "azure"
-#   }
-# }
+ }
 
 variable "ctrl_password" {}
 variable "vcs_repository" {default = "placeholder"}
-
-
-# variable "public_key" {}
-# variable "private_key" {}
 variable "key_name" {default = "avtx-key"}
 
 
