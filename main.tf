@@ -7,9 +7,8 @@ locals {
 
 
 resource "aviatrix_vpc" "aviatrix_vpc_vnet" {
-  cloud_type           = (var.cloud_type == "aws") ? 1 : 8
-  account_name         = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
- # region               = (var.cloud_type == "aws") ? var.aws_cloud_region : var.azure_cloud_region
+  cloud_type           =  1
+  account_name         = "aws-account" 
   region               =  var.cloud_region["${var.aviatrix_transit_gateway}"]
   name                 = "${var.vm_name}-vpc"
   cidr                 = var.vnet_vpc_address_space
@@ -21,15 +20,14 @@ resource "aviatrix_vpc" "aviatrix_vpc_vnet" {
 # Aviatrix Spoke GW
 
 resource "aviatrix_spoke_gateway" "avx-spoke-gw" {
-  cloud_type             = (var.cloud_type == "aws") ? 1 : 8
-  #vpc_reg                = (var.cloud_type == "aws") ? var.aws_cloud_region : var.azure_cloud_region
+  cloud_type             =  1 
   vpc_reg               =  var.cloud_region["${var.aviatrix_transit_gateway}"]
   vpc_id                 = aviatrix_vpc.aviatrix_vpc_vnet.vpc_id
-  account_name           = (var.cloud_type == "aws") ? "aws-account" : "azure-account"
+  account_name           =  "aws-account"
   gw_name                = "avx-${var.vm_name}-gw"
   insane_mode            = var.hpe
-  gw_size                = (var.cloud_type == "aws") ? "t2.medium" : "Standard_B1ms"
-  subnet       = (var.cloud_type == "aws") ? aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].cidr : aviatrix_vpc.aviatrix_vpc_vnet.subnets[0].cidr
+  gw_size                = "t2.medium" 
+  subnet       = aviatrix_vpc.aviatrix_vpc_vnet.subnets[local.subnet_count].cidr
   enable_active_mesh     = true
   manage_transit_gateway_attachment = false
 }
