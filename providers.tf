@@ -1,5 +1,3 @@
-########## Providers ####
-
 provider "aviatrix" {
   username     = "admin"
   password      = var.ctrl_password
@@ -14,13 +12,4 @@ provider "aws" {
   region =  var.cloud_region["${var.aviatrix_transit_gateway}"]
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
-}
-
-provider "azurerm" {
-  features {}
-  subscription_id = var.azure_subscription_id
-  client_id       = var.azure_application_id
-  client_secret   = var.azure_application_key
-  tenant_id       = var.azure_directory_id
-  version = "=2.0.0"
 }
